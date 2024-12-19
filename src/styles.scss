@@ -1,2 +1,40 @@
 /* You can add global styles to this file, and also import other style files */
-@use "./styles/fonts.scss";
+@use "./styles/fonts.scss" as Font;
+@use "./styles/palette.scss" as Palette;
+@use "./styles/mixins.scss" as mix;
+
+/* Main body text */
+body {
+  font-family: Font.$secondary-text;
+  font-size: 1rem;
+  line-height: 1.6;
+  background-color: Palette.$neutral-color;
+  color: Palette.$text-dark;
+  margin: 0;
+  padding: 0;
+}
+
+/* Main titles */
+h1, h2, h3 {
+  font-family: Font.$principal-text;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  margin-bottom: 0.5em;
+  color: Palette.$primary-color;
+}
+
+p {
+  font-family: Font.$secondary-text;
+  color: Palette.$text-dark;
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
+button, .cta {
+  @include mix.button(Palette.$accent-color, Palette.$neutral-color, Palette.$highlight-color);
+  border-radius: 4px;
+
+  &--secondary {
+    @include mix.button(Palette.$secondary-color, Palette.$text-dark, Palette.$highlight-color);
+  }
+}

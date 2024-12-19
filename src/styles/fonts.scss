@@ -3,22 +3,6 @@
 $principal-text: 'Staatliches', sans-serif;
 $secondary-text: 'Lato', sans-serif;
 
-/* Main body text */
-body {
-  font-family: $secondary-text;
-  font-size: 16px;
-  line-height: 1.6;
-  color: #333; /* Dark gray for readability */
-}
-
-/* Main titles */
-h1, h2, h3 {
-  font-family: $principal-text;
-  text-transform: uppercase;
-  letter-spacing: 1.5px;
-  margin-bottom: 0.5em;
-}
-
 h1 { font-size: 3rem; }    /* Main title */
 h2 { font-size: 2.5rem; }  /* Section titles */
 h3 { font-size: 2rem; }    /* Subsection titles */
@@ -26,18 +10,11 @@ h3 { font-size: 2rem; }    /* Subsection titles */
 /* Buttons and Call-to-Action */
 button, .cta {
   font-family: $principal-text;
-  text-transform: uppercase;
   font-size: 1.2rem;
-  letter-spacing: 1px;
-  color: #fff; /* White text */
-  background-color: #333; /* Dark background */
-  padding: 10px 20px;
-  border: none;
-  cursor: pointer;
 }
 
 /* Small captions or descriptions */
-p {
+.small-text {
   font-family: $secondary-text;
   font-size: 0.9rem;
   color: #777; /* Light gray for subtlety */

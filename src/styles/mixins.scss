@@ -1,0 +1,16 @@
+$button-padding: 10px 20px;
+
+@mixin button($bg-color, $text-color, $bg-color-hover) {
+  background-color: $bg-color;
+  color: $text-color;
+  border: none;
+  padding: $button-padding;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+
+  &:hover {
+    background-color: $bg-color-hover;
+  }
+}
