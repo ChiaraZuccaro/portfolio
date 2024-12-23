@@ -10,7 +10,8 @@ import { TranslateService } from '@ngx-translate/core';
 export class LanguageSelectorComponent {
   private _translateService = inject(TranslateService);
 
-  public changeLang(lang: string) {
-    // this._translateService;
+  public changeLang(event: Event) {
+    const langSelected = (event.target as HTMLSelectElement).value;
+    this._translateService.use(langSelected);
   }
 }
