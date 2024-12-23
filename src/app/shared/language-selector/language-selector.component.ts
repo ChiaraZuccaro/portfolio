@@ -1,4 +1,6 @@
 import { Component, inject } from '@angular/core';
+import { Langs } from '@app/enums/languages.enum';
+import { LangInterface } from '@app/interfaces/lang.interface';
 import { TranslateService } from '@ngx-translate/core';
 
 @Component({
@@ -10,8 +12,13 @@ import { TranslateService } from '@ngx-translate/core';
 export class LanguageSelectorComponent {
   private _translateService = inject(TranslateService);
 
-  public changeLang(event: Event) {
-    const langSelected = (event.target as HTMLSelectElement).value;
-    this._translateService.use(langSelected);
+  public langs = Langs;
+  public showLangOptions: boolean;
+  public selectedLang: LangInterface;
+
+  public changeLang(lang: string) {
+    this.selectedLang = this.langs.find(langListed => langListed.code === lang) ?? this.langs[0];
+    this.showLangOptions = false;
+    this._translateService.use(this.selectedLang.code);
   }
 }

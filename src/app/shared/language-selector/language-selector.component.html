@@ -1,4 +1,21 @@
-<select name="lang-selector" id="lang" (change)="changeLang($event)">
-  <option value="it">it</option>
-  <option value="en">en</option>
-</select>
+<!-- <select name="lang-selector" id="lang" title="lang" (change)="changeLang($event)">
+  @for (lang of langs; track $index) {
+    <option [value]="lang.code">
+      <img src="./lang_ico/{{lang.icon}}" alt="{{lang.code}}_flag" width="100%" height="100%">
+    </option>
+  }
+</select> -->
+
+<div class="langs">
+  <div class="langs__selected" (click)="showLangOptions = !showLangOptions">
+    <!-- {{ selectedLang.icon }} -->
+      <span>aaaahh</span>
+  </div>
+  @if(showLangOptions) {
+    @for (lang of langs; track $index) {
+      <div class="langs__options" (click)="changeLang(lang.code)">
+        <img src="./lang_ico{{lang.icon}}" alt="{{lang.code}}_flag">
+      </div>
+    }
+  }
+</div>
