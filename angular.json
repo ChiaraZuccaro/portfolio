@@ -9,6 +9,12 @@
         "@schematics/angular:component": {
           "style": "scss",
           "skipTests": true
+        },
+        "@schematics/angular:guard": {
+          "skipTests": true
+        },
+        "@schematics/angular:class": {
+          "skipTests": true
         }
       },
       "root": "",
@@ -33,7 +39,8 @@
               }
             ],
             "styles": [
-              "src/styles.scss"
+              "src/styles.scss",
+              "src/styles/palette.scss"
             ],
             "scripts": []
           },
