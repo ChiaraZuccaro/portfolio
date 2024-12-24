@@ -3,13 +3,22 @@
 @use "./styles/palette.scss" as Palette;
 @use "./styles/mixins.scss" as mix;
 
+:root {
+  --primary-color: #{Palette.$primary-color};
+  --accent-color: #{Palette.$accent-color};
+  --secondary-color: #{Palette.$secondary-color};
+  --neutral-color: #{Palette.$neutral-color};
+  --highlight-color: #{Palette.$highlight-color};
+}
+
+
 /* Main body text */
 body {
   font-family: Font.$secondary-text;
   font-size: 1rem;
   line-height: 1.6;
-  background-color: Palette.$neutral-color;
-  color: Palette.$text-dark;
+  background-color: Palette.$primary-color;
+  color: Palette.$text-light;
   margin: 0;
   padding: 0;
 }
@@ -20,7 +29,7 @@ h1, h2, h3 {
   text-transform: uppercase;
   letter-spacing: 1.5px;
   margin-bottom: 0.5em;
-  color: Palette.$primary-color;
+  color: Palette.$text-light;
 }
 
 p {
@@ -28,6 +37,11 @@ p {
   color: Palette.$text-dark;
   font-size: 1rem;
   line-height: 1.6;
+}
+
+a {
+  color: Palette.$text-light;
+  text-decoration: none
 }
 
 button, .cta {
