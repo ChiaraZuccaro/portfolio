@@ -1,3 +1,19 @@
 {
-  "WELCOME": "Benvenuto!"
+  "NAV": {
+    "HOME": "Home",
+    "CONTACTS": "Contatti",
+    "SKILLS": "Competenze",
+    "EXP": "Esperienza",
+    "CERTS": "Certificati",
+    "RESUME": "CurriculumVitae",
+    "ROUTES": {
+      "R_HOME": "home",
+      "R_CONTACTS": "contatti",
+      "R_SKILLS": "competenze",
+      "R_EXP": "esperienza",
+      "R_CERTS": "certificati",
+      "R_RESUME": "curriculum-vitae"
+    }
+}
+
 }
