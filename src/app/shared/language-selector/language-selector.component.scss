@@ -1,0 +1,17 @@
+.langs {
+  width: 2rem;
+  overflow: hidden;
+  
+  &__selected {
+
+  }
+
+  &__opt-container {
+    opacity: 0;
+    transition: opacity .2s ease-in-out;
+
+    &.show {
+      opacity: 1;
+    }
+  }
+}

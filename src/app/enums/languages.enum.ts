@@ -8,10 +8,10 @@ export enum Languages {
 export const Langs: LangInterface[] = [
   {
     code: Languages.IT,
-    icon: '/italy.svg'
+    icon: './lang_ico/italy.svg'
   },
   {
     code: Languages.EN,
-    icon: '/england.svg'
+    icon: './lang_ico/england.svg'
   }
 ];
