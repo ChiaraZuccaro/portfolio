@@ -1,0 +1,13 @@
+nav {
+  display: inline-flex;
+  justify-content: flex-end;
+  width: 100%;
+
+  .nav_item {
+    a {
+      .route-active {
+        text-decoration: underline;
+      }
+    }
+  }
+}

@@ -1,0 +1,10 @@
+<nav>
+  @for (item of navItems; track $index) {
+    <div class="nav_item" [class.route_active]>
+      <a [routerLink]="item.route">
+        <span>{{item.label | translate}}</span>
+      </a>
+    </div>
+  }
+  <language-selector></language-selector>
+</nav>
