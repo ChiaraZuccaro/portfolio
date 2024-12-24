@@ -1,6 +1,12 @@
 nav {
+  margin-top: .5rem;
+  padding: .3rem 0;
+  border-top: 1px var(--accent-color) solid;
+  border-bottom: 1px var(--highlight-color) solid;
   display: inline-flex;
   justify-content: flex-end;
+  align-items: center;
+  gap: 1rem;
   width: 100%;
 
   .nav_item {
