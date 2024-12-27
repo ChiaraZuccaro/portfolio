@@ -1,6 +1,7 @@
 {
   "NAV": {
     "HOME": "Home",
+    "ABOUT": "Su di me",
     "CONTACTS": "Contatti",
     "SKILLS": "Competenze",
     "EXP": "Esperienza",
@@ -8,6 +9,7 @@
     "RESUME": "CurriculumVitae",
     "ROUTES": {
       "R_HOME": "home",
+      "R_ABOUT": "su-di-me",
       "R_CONTACTS": "contatti",
       "R_SKILLS": "competenze",
       "R_EXP": "esperienza",

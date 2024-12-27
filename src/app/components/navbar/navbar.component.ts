@@ -17,24 +17,20 @@ export class NavbarComponent implements OnInit {
       route: '#hero'
     },
     {
-      label: 'NAV.HOME',
+      label: 'NAV.ABOUT',
       route: '#about'
-    },
-    {
-      label: 'NAV.EXP',
-      route: '#exp'
-    },
-    {
-      label: 'NAV.CERTS',
-      route: '#certs'
-    },
-    {
-      label: 'NAV.CONTACTS',
-      route: '#contacts'
     },
     {
       label: 'NAV.SKILLS',
       route: '#skills'
+    },
+    {
+      label: 'NAV.EXP',
+      route: '#jobs'
+    },
+    {
+      label: 'NAV.CONTACTS',
+      route: '#contacts'
     },
     {
       label: 'NAV.RESUME',

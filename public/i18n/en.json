@@ -1,6 +1,7 @@
 {
   "NAV": {
     "HOME": "Home",
+    "ABOUT": "About me",
     "CONTACTS": "Contacts",
     "SKILLS": "Skills",
     "EXP": "Jobs",
@@ -8,6 +9,7 @@
     "RESUME": "Resume",
     "ROUTES": {
       "R_HOME": "home",
+      "R_ABOUT": "about-me",
       "R_CONTACTS": "contacts",
       "R_SKILLS": "skills",
       "R_EXP": "jobs",
