@@ -1,0 +1,22 @@
+.hero {
+  .profile-photo {
+    display: inline-block; // Ensures proper alignment
+    width: 150px;          // Set the desired size of the photo
+    height: 150px;         // Match the width for a perfect circle
+    border-radius: 50%;    // Makes the image circular
+    overflow: hidden;      // Ensures the image fits within the circle
+    border: 5px solid var(--accent-color); // Adds a border in your brand color
+  
+    img {
+      width: 100%;        // Ensures the image scales to fit
+      height: 100%;       // Ensures the image scales to fit
+      object-fit: cover;  // Crops the image to fit perfectly within the circle
+    }
+  
+    // Optional hover effect
+    &:hover {
+      border-color: var(--highlight-color); // Changes the border color on hover
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); // Adds a subtle shadow effect
+    }
+  }
+}

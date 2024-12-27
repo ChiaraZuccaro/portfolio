@@ -1,15 +1,10 @@
 import { Component, inject, OnInit } from '@angular/core';
-import { ActivatedRoute, RouterLink } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { TranslatePipe } from '@ngx-translate/core';
-import { LanguageSelectorComponent } from '../language-selector/language-selector.component';
 
 @Component({
   selector: 'navbar',
-  imports: [
-    RouterLink,
-    TranslatePipe,
-    LanguageSelectorComponent
-  ],
+  imports: [ TranslatePipe ],
   templateUrl: './navbar.component.html',
   styleUrl: './navbar.component.scss'
 })
@@ -19,27 +14,31 @@ export class NavbarComponent implements OnInit {
   public navItems = [
     {
       label: 'NAV.HOME',
-      route: '/home'
+      route: '#hero'
+    },
+    {
+      label: 'NAV.HOME',
+      route: '#about'
     },
     {
       label: 'NAV.EXP',
-      route: '/experiences'
+      route: '#exp'
     },
     {
       label: 'NAV.CERTS',
-      route: '/certification'
+      route: '#certs'
     },
     {
       label: 'NAV.CONTACTS',
-      route: '/contacts'
+      route: '#contacts'
     },
     {
       label: 'NAV.SKILLS',
-      route: '/skills'
+      route: '#skills'
     },
     {
       label: 'NAV.RESUME',
-      route: '/resume'
+      route: '#resume'
     }
   ]
 
