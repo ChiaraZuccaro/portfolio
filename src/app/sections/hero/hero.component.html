@@ -1,5 +1,19 @@
-<section class="hero">
-  <a href="https://www.linkedin.com/in/chiara-zuccaro/" target="_blank">
-    <img [draggable]="false" src="./photos_me/face.png" alt="chiara_zuccaro_web_developer" />
-  </a>
-</section>
+<div class="hero">
+  <div class="hero__name">
+    <img [draggable]="false" src="./photos_me/face.png" alt="chiara_zuccaro_web_developer"/>
+    <div class="hero__name__info">
+      <h1>Web Developer</h1>
+      <p>Hi there! I'm Chiara Zuccaro, a web developer based in Catania, Italy and working as Front End dev</p>
+    </div>
+  </div>
+  <div class="hero__techs">
+    @for (tech of techs; track $index) {
+      <div class="hero__techs__card tooltip-container">
+        <div class="circle">
+          <img [src]="tech.icon" alt="{{tech.name}}_ico">
+        </div>
+        <span class="tooltip-item">{{ tech.name }}</span>
+      </div>
+    }
+  </div>
+</div>

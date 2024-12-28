@@ -17,8 +17,8 @@ body {
   font-family: Font.$secondary-text;
   font-size: 1rem;
   line-height: 1.6;
-  background-color: Palette.$primary-color;
-  color: Palette.$text-light;
+  background-color: var(--neutral-color);
+  // color: Palette.$text-light;
   margin: 0;
   padding: 0;
 }
@@ -28,13 +28,14 @@ h1, h2, h3 {
   font-family: Font.$principal-text;
   text-transform: uppercase;
   letter-spacing: 1.5px;
+  margin-top: 0;
   margin-bottom: 0.5em;
-  color: Palette.$text-light;
+  // color: Palette.$text-light;
 }
 
 p {
   font-family: Font.$secondary-text;
-  color: Palette.$text-light;
+  // color: Palette.$text-light;
   font-size: 1rem;
   line-height: 1.6;
 }
@@ -50,5 +51,25 @@ button, .cta {
 
   &--secondary {
     @include mix.button(Palette.$secondary-color, Palette.$text-dark, Palette.$highlight-color);
+  }
+}
+
+.tooltip-container {
+  position: relative;
+
+  .tooltip-item {
+    display: none;
+  }
+
+  &:hover {
+    .tooltip-item {
+      display: block;
+      position: absolute;
+      top: -50%;
+      left: 0;
+      white-space: nowrap;
+      padding: .3rem .5rem;
+      border-radius: .3rem;
+    }
   }
 }

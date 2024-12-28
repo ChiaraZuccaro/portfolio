@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Technologies } from '@app/data/techs.mock';
 
 @Component({
   selector: 'hero',
@@ -7,5 +8,5 @@ import { Component } from '@angular/core';
   styleUrl: './hero.component.scss'
 })
 export class HeroComponent {
-
+  public techs = Technologies;
 }

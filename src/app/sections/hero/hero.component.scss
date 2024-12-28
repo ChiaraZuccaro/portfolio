@@ -1,22 +1,124 @@
 .hero {
-  .profile-photo {
-    display: inline-block; // Ensures proper alignment
-    width: 150px;          // Set the desired size of the photo
-    height: 150px;         // Match the width for a perfect circle
-    border-radius: 50%;    // Makes the image circular
-    overflow: hidden;      // Ensures the image fits within the circle
-    border: 5px solid var(--accent-color); // Adds a border in your brand color
-  
+  position: relative;
+  height: calc(100vh - 60px);
+  margin: 0 auto;
+  width: 70%;
+
+  &__name {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 3rem;
+    color: var(--primary-color);
+    height: 85%;
+
     img {
-      width: 100%;        // Ensures the image scales to fit
-      height: 100%;       // Ensures the image scales to fit
-      object-fit: cover;  // Crops the image to fit perfectly within the circle
+      z-index: 0;
+      height: 60%;
+      border-radius: 10rem;
+      filter: drop-shadow(4px);
     }
-  
-    // Optional hover effect
-    &:hover {
-      border-color: var(--highlight-color); // Changes the border color on hover
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); // Adds a subtle shadow effect
+  }
+
+  &__techs {
+    height: 15%;
+    width: 100%;
+    display: inline-flex;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 3.5rem;
+
+    &__card {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100px; // Puoi cambiare la dimensione
+      height: 100px;
+      border-radius: 50%;
+      background-color: var(--neutral-color);
+      transition: transform 0.5s ease-in-out;
+      overflow: hidden; // Nasconde la parte che fuoriesce dal cerchio
+
+      &:hover {
+        transform: rotate(180deg); // Rotazione del cerchio all'hover
+      }
+
+      .circle {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        border-radius: 50%;
+        background: conic-gradient(
+          var(--neutral-color) 25%, // Angolo in alto a sinistra
+          var(--accent-color) 0% 50%, // Angolo in basso a destra
+          var(--neutral-color) 50% 75%, // Angolo in basso a sinistra
+          var(--accent-color) 75% 100%  // Angolo in alto a destra
+        );
+        transition: background 0.5s ease-in-out;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        // Applicare la rotazione solo alla parte esterna, mantenendo l'immagine centrale
+        &:hover {
+          background: conic-gradient(
+            var(--neutral-color) 25%,
+            var(--accent-color) 0% 50%, 
+            var(--neutral-color) 50% 75%, 
+            var(--accent-color) 75% 100%
+          );
+        }
+
+        img {
+          position: absolute; // Rendi immobile l'immagine al centro
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%); // Centra l'immagine esattamente
+          width: 60%; // Regola la dimensione dell'immagine
+          height: 60%;
+        }
+      }
+      // display: flex;
+      // align-items: center;
+      // justify-content: center;
+      // width: 50px;
+      // height: 50px;
+      // padding: .9rem;
+      // border-radius: 3rem;
+      // background-color: var(--neutral-color);
+      // box-shadow: -6px -7px 0 -9px var(--neutral-color),
+      // 6px 7px 0 -9px var(--neutral-color),
+      // 20px 20px 0 -26px var(--accent-color),
+      // 0 0 0 2px var(--accent-color);
+
+      // img {
+      //   width: 80%;
+      //   height: 80%;
+      // }
+
+      // &:hover {
+      //   animation: techSlide 3s ease-in-out 1 forwards;
+      //   .tooltip-item {
+      //     box-shadow: 16px 16px 9px -16px var(--primary-color),
+      //     -2px -2px 0px 0px var(--accent-color);
+      //   }
+      // }
     }
+  }
+}
+
+@keyframes techSlide {
+  25% {
+    box-shadow: 6px 7px 0 -6px var(--neutral-color),
+    -7px -7px 0 -6px var(--neutral-color),
+    20px 20px 0 -26px var(--accent-color),
+    0 0 0 2px var(--accent-color);
+  }
+  75% {
+    box-shadow: -6px -7px 0 -9px var(--neutral-color),
+    6px 7px 0 -9px var(--neutral-color),
+    20px 20px 0 -26px var(--accent-color),
+    0 0 0 2px var(--accent-color);
   }
 }
