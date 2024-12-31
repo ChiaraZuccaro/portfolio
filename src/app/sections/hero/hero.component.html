@@ -8,11 +8,12 @@
   </div>
   <div class="hero__techs">
     @for (tech of techs; track $index) {
-      <div class="hero__techs__card tooltip-container">
-        <div class="circle">
+      <div class="hero__techs__wrap tooltip-container">
+        <div class="circle"></div>
+        <div class="hero__techs__wrap__card">
           <img [src]="tech.icon" alt="{{tech.name}}_ico">
+          <span class="tooltip-item">{{ tech.name }}</span>
         </div>
-        <span class="tooltip-item">{{ tech.name }}</span>
       </div>
     }
   </div>
