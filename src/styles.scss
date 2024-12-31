@@ -20,6 +20,7 @@ body {
   background-color: var(--neutral-color);
   margin: 0;
   padding: 0;
+  user-select: none;
 
   header {
     position: sticky;

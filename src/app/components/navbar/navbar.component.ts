@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { NavItems } from '@app/data/nav-items';
 import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
@@ -8,32 +9,7 @@ import { TranslatePipe } from '@ngx-translate/core';
   styleUrl: './navbar.component.scss'
 })
 export class NavbarComponent {
-  public navItems = [
-    {
-      label: 'NAV.HOME',
-      route: 'hero'
-    },
-    {
-      label: 'NAV.ABOUT',
-      route: 'about-me'
-    },
-    {
-      label: 'NAV.SKILLS',
-      route: 'skills'
-    },
-    {
-      label: 'NAV.EXP',
-      route: 'jobs'
-    },
-    {
-      label: 'NAV.CONTACTS',
-      route: 'contacts'
-    },
-    {
-      label: 'NAV.RESUME',
-      route: 'resume'
-    }
-  ];
+  public navItems = NavItems;
 
   public scrollToElement(idSection: string) {
     const navHeight = document.querySelector('header').clientHeight || 0;
