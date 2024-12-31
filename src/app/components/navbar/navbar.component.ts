@@ -1,5 +1,4 @@
-import { Component, inject } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { Component } from '@angular/core';
 import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
@@ -9,8 +8,6 @@ import { TranslatePipe } from '@ngx-translate/core';
   styleUrl: './navbar.component.scss'
 })
 export class NavbarComponent {
-  private route = inject(ActivatedRoute);
-
   public navItems = [
     {
       label: 'NAV.HOME',
@@ -36,7 +33,7 @@ export class NavbarComponent {
       label: 'NAV.RESUME',
       route: 'resume'
     }
-  ]
+  ];
 
   public scrollToElement(idSection: string) {
     const navHeight = document.querySelector('header').clientHeight || 0;
