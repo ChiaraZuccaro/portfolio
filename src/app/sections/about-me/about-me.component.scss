@@ -1,0 +1,26 @@
+.about-me {
+  background-color: var(--primary-color);
+  color: var(--neutral-color);
+  
+  &__description {
+    width: 80%;
+    height: calc(100vh - 61px);
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    &__text {
+      width: 60%;
+    }
+
+    &__img {
+      width: 50%;
+
+      img {
+        width: 100%;
+      }
+    }
+  }
+  
+}

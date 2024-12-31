@@ -1,13 +1,10 @@
 .langs {
   position: fixed;
-  bottom: 0;
+  bottom: 2.5%;
   left: 2%;
   width: 3rem;
   overflow: hidden;
   
-  &__selected {
-
-  }
 
   &__opt-container {
     opacity: 0;
