@@ -6,17 +6,3 @@ $secondary-text: 'Lato', sans-serif;
 h1 { font-size: 3rem; }    /* Main title */
 h2 { font-size: 2.5rem; }  /* Section titles */
 h3 { font-size: 2rem; }    /* Subsection titles */
-
-/* Buttons and Call-to-Action */
-button, .cta {
-  font-family: $principal-text;
-  font-size: 1.2rem;
-}
-
-/* Small captions or descriptions */
-.small-text {
-  font-family: $secondary-text;
-  font-size: 0.9rem;
-  color: #777; /* Light gray for subtlety */
-  font-style: italic;
-}

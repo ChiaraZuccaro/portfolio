@@ -18,9 +18,14 @@ body {
   font-size: 1rem;
   line-height: 1.6;
   background-color: var(--neutral-color);
-  // color: Palette.$text-light;
   margin: 0;
   padding: 0;
+
+  header {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+  }
 }
 
 /* Main titles */
@@ -30,12 +35,10 @@ h1, h2, h3 {
   letter-spacing: 1.5px;
   margin-top: 0;
   margin-bottom: 0.5em;
-  // color: Palette.$text-light;
 }
 
 p {
   font-family: Font.$secondary-text;
-  // color: Palette.$text-light;
   font-size: 1rem;
   line-height: 1.6;
 }

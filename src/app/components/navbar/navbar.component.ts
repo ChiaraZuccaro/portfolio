@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { TranslatePipe } from '@ngx-translate/core';
 
@@ -8,42 +8,45 @@ import { TranslatePipe } from '@ngx-translate/core';
   templateUrl: './navbar.component.html',
   styleUrl: './navbar.component.scss'
 })
-export class NavbarComponent implements OnInit {
+export class NavbarComponent {
   private route = inject(ActivatedRoute);
 
   public navItems = [
     {
       label: 'NAV.HOME',
-      route: '#hero'
+      route: 'hero'
     },
     {
       label: 'NAV.ABOUT',
-      route: '#about'
+      route: 'about-me'
     },
     {
       label: 'NAV.SKILLS',
-      route: '#skills'
+      route: 'skills'
     },
     {
       label: 'NAV.EXP',
-      route: '#jobs'
+      route: 'jobs'
     },
     {
       label: 'NAV.CONTACTS',
-      route: '#contacts'
+      route: 'contacts'
     },
     {
       label: 'NAV.RESUME',
-      route: '#resume'
+      route: 'resume'
     }
   ]
 
-  ngOnInit() {
-    const test = this.route.url.subscribe(
-      urlPath => {
-        const currentPath = urlPath.map(segment => segment.path).join('/');
-        // debugger
-      }
-    )
+  public scrollToElement(idSection: string) {
+    const navHeight = document.querySelector('header').clientHeight || 0;
+    const element = document.getElementById(idSection);
+    if(element) {
+      const heightToScrollInto = idSection === 'hero' ? 0 : element.offsetTop - navHeight;
+      window.scrollTo({
+        top: heightToScrollInto,
+        behavior: 'smooth'
+      })
+    }
   }
 }
