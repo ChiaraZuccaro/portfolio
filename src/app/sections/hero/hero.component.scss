@@ -40,15 +40,17 @@
         height: 100%;
         border-radius: 2rem;
         background: conic-gradient(
-          var(--neutral-color) 25%, // Angolo in alto a sinistra
-          var(--accent-color) 0% 50%, // Angolo in basso a destra
-          var(--neutral-color) 50% 75%, // Angolo in basso a sinistra
-          var(--accent-color) 75% 100%  // Angolo in alto a destra
+          var(--neutral-color) 25%,
+          var(--accent-color) 0% 50%,
+          var(--neutral-color) 50% 75%,
+          var(--accent-color) 75% 100%
         );
         transition: transform 0.3s ease;
       }
 
       &__card {
+        width: 95%;
+        height: 95%;
         background-color: var(--neutral-color);
         position: absolute;
         top: 50%;
@@ -68,20 +70,5 @@
         }
       }
     }
-  }
-}
-
-@keyframes techSlide {
-  25% {
-    box-shadow: 6px 7px 0 -6px var(--neutral-color),
-    -7px -7px 0 -6px var(--neutral-color),
-    20px 20px 0 -26px var(--accent-color),
-    0 0 0 2px var(--accent-color);
-  }
-  75% {
-    box-shadow: -6px -7px 0 -9px var(--neutral-color),
-    6px 7px 0 -9px var(--neutral-color),
-    20px 20px 0 -26px var(--accent-color),
-    0 0 0 2px var(--accent-color);
   }
 }
