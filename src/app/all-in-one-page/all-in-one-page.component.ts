@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { LanguageSelectorComponent } from '@app/components/language-selector/language-selector.component';
 import { NavbarComponent } from '@app/components/navbar/navbar.component';
 import { AboutMeComponent } from '@app/sections/about-me/about-me.component';
 import { ContactsComponent } from '@app/sections/contacts/contacts.component';
@@ -14,7 +15,8 @@ import { SkillsComponent } from '@app/sections/skills/skills.component';
     AboutMeComponent,
     SkillsComponent,
     JobsComponent,
-    ContactsComponent
+    ContactsComponent,
+    LanguageSelectorComponent
   ],
   templateUrl: './all-in-one-page.component.html',
   styleUrl: './all-in-one-page.component.scss'
