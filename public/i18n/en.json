@@ -16,5 +16,13 @@
       "R_CERTS": "certs",
       "R_RESUME": "resume"
     }
+  },
+  "HERO": {
+    "TITLE": "Web Developer",
+    "SUBTITLE": "Hi there! I'm Chiara Zuccaro, a web developer based in Catania, Italy and working as Front End developer."
+  },
+  "ABOUT_ME": {
+    "TITLE": "About me",
+    "DESCRIPTION": "Once I realized that programming was my true calling, I never looked back. In 2022, I embarked on a journey with Edgemony, which enabled me to deepen my foundational knowledge of web development, with a particular focus on frontend technologies. Through Bcame, I gained exposure to new frameworks and also delved into backend languages, working on both e-commerce platforms and other projects. Currently, at OTO s.r.l., I am advancing my expertise in Angular and Typescript."
   }
 }

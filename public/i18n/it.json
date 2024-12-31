@@ -16,6 +16,13 @@
       "R_CERTS": "certificati",
       "R_RESUME": "curriculum-vitae"
     }
-}
-
+  },
+  "HERO": {
+    "TITLE": "Web Developer",
+    "SUBTITLE": "Ciao! Sono Chiara Zuccaro, una sviluppatrice web con sede a Catania, Italia, e lavoro come Front End Developer."
+  },
+  "ABOUT_ME": {
+    "TITLE": "Su di me",
+    "DESCRIPTION": "Nel momento in cui ho capito che la programmazione è il mio mondo non mi sono più fermata; nel 2022 ho intrapreso un percorso con Edgemony che mi ha permesso di approfondire le conoscenze basi per lo sviluppo web, in particolare il frontend; grazie a Bcame ho conosciuto nuovi framework e assaporato anche linguaggi da backend, lavorando su e-commerce e non. Adesso in OTO s.r.l. sto approfondendo la conoscenza in Angular e Typescript."
+  }
 }
