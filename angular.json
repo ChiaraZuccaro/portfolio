@@ -45,6 +45,11 @@
               "src/styles.scss",
               "src/styles/palette.scss"
             ],
+            "stylePreprocessorOptions": {
+              "includePaths": [
+                "public"
+              ]
+            },
             "scripts": []
           },
           "configurations": {
