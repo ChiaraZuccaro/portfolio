@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, ViewChild } from '@angular/core';
 import { LanguageSelectorComponent } from '@app/components/language-selector/language-selector.component';
 import { NavbarComponent } from '@app/components/navbar/navbar.component';
 import { AboutMeComponent } from '@app/sections/about-me/about-me.component';
@@ -22,5 +22,4 @@ import { SkillsComponent } from '@app/sections/skills/skills.component';
   styleUrl: './all-in-one-page.component.scss'
 })
 export class AllInOnePageComponent {
-
 }
