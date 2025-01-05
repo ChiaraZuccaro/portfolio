@@ -1,65 +1,61 @@
 import { Injectable } from '@angular/core';
-import { BoxParams, CylinderParams, TorusParams } from '@app/interfaces/three.interface';
 import * as THREE from 'three';
-
+import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 @Injectable({
   providedIn: 'root'
 })
 export class ThreeService {
-  scene: THREE.Scene;
-  camera: THREE.PerspectiveCamera;
-  renderer: THREE.WebGLRenderer;
+  static instance: ThreeService;
 
-  constructor() {
-    this.scene = new THREE.Scene();
-    this.camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-    this.renderer = new THREE.WebGLRenderer();
+  public Three = THREE;
+  public controls: OrbitControls;
 
-    this.camera.position.z = 5;
-  }
+  public scene: THREE.Scene;
+  private camera: THREE.Camera;
+  private renderer: THREE.WebGLRenderer;
 
-  initializeRenderer(canvas: HTMLCanvasElement): void {
+  constructor() { ThreeService.instance = this }
+
+  public initScenario(canvas?: HTMLCanvasElement) {
+    this.scene = new this.Three.Scene();
+    this.camera = new this.Three.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+    this.renderer = new this.Three.WebGLRenderer();
+
+    this.scene.background = new THREE.Color(0xcce7ff);
     this.renderer.setSize(window.innerWidth, window.innerHeight);
-    this.renderer.setPixelRatio(window.devicePixelRatio);
-    canvas.appendChild(this.renderer.domElement);
+    // ----
+    document.body.appendChild(this.renderer.domElement);
+    // ----
+    this.camera.position.z = 5;
+
+    // DEV MODE
+    const axesHelper = new this.Three.AxesHelper(5);
+    this.scene.add(axesHelper);
+
+    this.controls = new OrbitControls(this.camera, this.renderer.domElement);
+    this.controls.target.set(0, 1.5, 0); // Punto attorno al quale orbitare
+    this.controls.update();
+    // DEV MODE
+
+    const ambientLight = new this.Three.AmbientLight(0xffffff, 0.5); // Luce ambientale
+    this.scene.add(ambientLight);
+
+    const directionalLight = new this.Three.DirectionalLight(0xffffff, 1); // Luce direzionale
+    directionalLight.position.set(5, 10, 7.5);
+    this.scene.add(directionalLight);
   }
 
-  animate(callback: () => void): void {
+  public addObj(obj: any) {
+    this.scene.add(obj);
+  }
+
+  public animate(callback: () => void) {
     const animateLoop = (): void => {
       requestAnimationFrame(animateLoop);
       callback();
+      this.controls.update();
       this.renderer.render(this.scene, this.camera);
     };
     animateLoop();
-  }
-
-  addObject(object: THREE.Object3D): void {
-    this.scene.add(object);
-  }
-
-  createColor(color: number): THREE.Color {
-    return new THREE.Color(color);
-  }
-
-  createBox({ width = 1, height = 1, depth = 1, color = 0x333333 }: BoxParams): THREE.Mesh {
-    const geometry = new THREE.BoxGeometry(width, height, depth);
-    const material = new THREE.MeshBasicMaterial({ color });
-    return new THREE.Mesh(geometry, material);
-  }
-
-  createCylinder({ radiusTop = 0.2, radiusBottom = 0.2, height = 0.05, color = 0x000000 }: CylinderParams): THREE.Mesh {
-    const geometry = new THREE.CylinderGeometry(radiusTop, radiusBottom, height, 32);
-    const material = new THREE.MeshBasicMaterial({ color });
-    return new THREE.Mesh(geometry, material);
-  }
-
-  createTorus({ radius = 1, tube = 0.4, radialSegments = 16, tubularSegments = 100, color = 0x333333 }: TorusParams): THREE.Mesh {
-    const geometry = new THREE.TorusGeometry(radius, tube, radialSegments, tubularSegments);
-    const material = new THREE.MeshBasicMaterial({ color });
-    return new THREE.Mesh(geometry, material);
-  }
-
-  createGroup(): THREE.Group {
-    return new THREE.Group();
   }
 }

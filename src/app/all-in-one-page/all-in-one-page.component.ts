@@ -10,13 +10,13 @@ import { SkillsComponent } from '@app/sections/skills/skills.component';
 @Component({
   selector: 'all-in-one-page',
   imports: [
-    NavbarComponent,
+    // NavbarComponent,
     HeroComponent,
-    AboutMeComponent,
-    SkillsComponent,
-    JobsComponent,
-    ContactsComponent,
-    LanguageSelectorComponent
+    // AboutMeComponent,
+    // SkillsComponent,
+    // JobsComponent,
+    // ContactsComponent,
+    // LanguageSelectorComponent
   ],
   templateUrl: './all-in-one-page.component.html',
   styleUrl: './all-in-one-page.component.scss'

@@ -1,21 +1,20 @@
-export interface BoxParams {
-  width?: number;
-  height?: number;
-  depth?: number;
-  color?: number;
+export interface SphereParams {
+  radius?: number,
+  widthSegments?: number,
+  heightSegments?: number,
+  phiStart?: number,
+  phiLength?: number,
+  thetaStart?: number,
+  thetaLength?: number
 }
 
 export interface CylinderParams {
-  radiusTop?: number;
-  radiusBottom?: number;
-  height?: number;
-  color?: number;
-}
-
-export interface TorusParams {
-  radius?: number;
-  tube?: number;
-  radialSegments?: number;
-  tubularSegments?: number;
-  color?: number;
+  radiusTop?: number,
+  radiusBottom?: number,
+  height?: number,
+  radialSegments?: number,
+  heightSegments?: number,
+  openEnded?: boolean,
+  thetaStart?: any,
+  thetaLength?: any
 }
