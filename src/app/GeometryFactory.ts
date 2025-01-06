@@ -3,9 +3,10 @@ import { CylinderParams, SphereParams } from "./interfaces/three.interface";
 import { ThreeService } from "./services/three.service";
 
 export class GeometryFactory {
-  private threeService = ThreeService.instance;
-
+  public threeService = ThreeService.instance;
   public Three = this.threeService.Three;
+  
+  public group = new this.Three.Group();
 
   public color: ColorRepresentation;
   public material: Material;

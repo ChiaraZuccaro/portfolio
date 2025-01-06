@@ -1,0 +1,113 @@
+import { GeometryFactory } from "@app/GeometryFactory";
+import { ImprovedNoise } from 'three/addons/math/ImprovedNoise.js';
+
+export class Ground extends GeometryFactory {
+  private size = 256;
+  private terrainWidth = 100; // Larghezza del terreno
+  private terrainDepth = 100; // Profondità del terreno
+  private roadWidth = 4.1; // Larghezza della strada
+  private roadStart = -2.5; // Posizione iniziale della strada lungo l'asse X
+  private roadEnd = 2.5; // Posizione finale della strada lungo l'asse X
+
+  constructor() {
+    super();
+
+    const terrain = this.createTerrain();
+    const road = this.createRoad();
+  
+    this.group.add(terrain, road);
+  
+    // Lights
+    const ambientLight = new this.Three.AmbientLight(0xffffff, 0.5);
+    this.threeService.scene.add(ambientLight);
+  
+    const directionalLight = new this.Three.DirectionalLight(0xffffff, 1);
+    directionalLight.position.set(10, 20, 10);
+    this.threeService.scene.add(directionalLight);
+  }
+
+  //#region Road
+  private createRoadGeometry() {
+    const roadGeometry = new this.Three.PlaneGeometry(this.roadWidth, this.terrainDepth, 1, 1);
+    roadGeometry.rotateX(-Math.PI / 2);
+    roadGeometry.translate(0, 0, 0);
+    return roadGeometry;
+  }
+
+  private createRoadMaterial() {
+    const roadTexture = new this.Three.TextureLoader().load('./textures/asphalt_black.jpg');
+    roadTexture.wrapS = this.Three.RepeatWrapping;
+    roadTexture.wrapT = this.Three.RepeatWrapping;
+    roadTexture.repeat.set(1, 5);
+  
+    const roadMaterial = new this.Three.MeshStandardMaterial({
+      color: 0x333333,
+      map: roadTexture,
+      roughness: 0.5,
+    });
+    return roadMaterial;
+  }
+
+  private createRoad() {
+    const roadGeo = this.createRoadGeometry();
+    const roadMaterial = this.createRoadMaterial();
+    return new this.Three.Mesh(roadGeo, roadMaterial);
+  }
+  //#endregion
+
+  //#region Terrain
+  private createTerrainGeometry() {
+    const terrainGeometry = new this.Three.PlaneGeometry(this.terrainWidth, this.terrainDepth, this.size - 1, this.size - 1);
+    terrainGeometry.rotateX(-Math.PI / 2);
+  
+    // Perlin Noise for Terrain Heights
+    const data = new Float32Array(this.size * this.size);
+    const perlin = new ImprovedNoise();
+    let quality = 10;
+    for (let i = 0; i < data.length; i++) {
+      const x = terrainGeometry.attributes['position'].getX(i);
+      const z = terrainGeometry.attributes['position'].getZ(i);
+      // Controlla se il vertice è dentro l'area della strada
+      if (x > this.roadStart && x < this.roadEnd) {
+        data[i] = 0; // Piatto (nessun rumore)
+      } else {
+        data[i] = perlin.noise(x / quality, 12/ quality, z / quality) * 2.5; // Altezza basata sul rumore
+      }
+    }
+  
+    for (let i = 0; i < terrainGeometry.attributes['position'].count; i++) {
+      terrainGeometry.attributes['position'].setY(i, data[i]);
+    }
+  
+    terrainGeometry.computeVertexNormals();
+
+    return terrainGeometry;
+  }
+
+  private createTerrainMaterial() {
+    const terrainTexture = new this.Three.TextureLoader().load('./textures/sand.jpg');
+    terrainTexture.wrapS = this.Three.RepeatWrapping;
+    terrainTexture.wrapT = this.Three.RepeatWrapping;
+    terrainTexture.repeat.set(1,1);
+  
+    return new this.Three.MeshStandardMaterial({
+      map: terrainTexture,
+      color: 0xd2b48c,
+      roughness: .5,
+    });
+  }
+
+  private createTerrain() {
+    const geoTerrain = this.createTerrainGeometry();
+    const materialTerrain = this.createTerrainMaterial();
+    const terrain = new this.Three.Mesh(geoTerrain, materialTerrain);
+    terrain.position.y = -.03;
+
+    return terrain;
+  }
+  //#endregion
+
+  public get() {
+    return this.group;
+  }
+}
