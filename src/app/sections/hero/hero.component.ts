@@ -1,5 +1,4 @@
 import { Component, ElementRef, inject, OnInit, ViewChild } from '@angular/core';
-import { Cactus } from '@app/classes/cactus.class';
 import { Ground } from '@app/classes/ground.class';
 import { ThreeService } from '@app/services/three.service';
 
@@ -18,15 +17,9 @@ export class HeroComponent implements OnInit {
   ngOnInit() {
     this._threeService.initScenario();
 
-    for (let i = 0; i < 3; i++) {
-      const cactus = new Cactus().get();
-      cactus.position.set(2 + (i * 70), 0, -3.5);
-      this._threeService.addObj(cactus);
-    }
-
     const ground = new Ground().get();
     ground.rotateY(Math.PI / 2)
-    // this._threeService.addObj(ground);
+    this._threeService.addObj(ground);
 
     this._threeService.animate(() => {
 

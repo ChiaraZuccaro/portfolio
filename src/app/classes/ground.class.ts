@@ -1,5 +1,7 @@
 import { GeometryFactory } from "@app/GeometryFactory";
 import { ImprovedNoise } from 'three/addons/math/ImprovedNoise.js';
+import { Cactus } from "./cactus.class";
+import { PlaneGeometry } from "three";
 
 export class Ground extends GeometryFactory {
   private size = 256;
@@ -69,9 +71,9 @@ export class Ground extends GeometryFactory {
       const z = terrainGeometry.attributes['position'].getZ(i);
       // Controlla se il vertice è dentro l'area della strada
       if (x > this.roadStart && x < this.roadEnd) {
-        data[i] = 0; // Piatto (nessun rumore)
+        data[i] = 0;
       } else {
-        data[i] = perlin.noise(x / quality, 12/ quality, z / quality) * 2.5; // Altezza basata sul rumore
+        data[i] = perlin.noise(x / quality, 12/ quality, z / quality) * 2.5;
       }
     }
   
@@ -102,8 +104,36 @@ export class Ground extends GeometryFactory {
     const materialTerrain = this.createTerrainMaterial();
     const terrain = new this.Three.Mesh(geoTerrain, materialTerrain);
     terrain.position.y = -.03;
-
+    this.addCactus(geoTerrain);
     return terrain;
+  }
+  //#endregion
+
+  //#region Cactus
+  private addCactus(geoTerrain: PlaneGeometry) {
+    const cactusCount = 15;
+    const vertices = geoTerrain.attributes['position'];
+    const groupCactus = new this.Three.Group(); // Gruppo per raccogliere tutti i cactus
+
+    for (let i = 0; i < cactusCount; i++) {
+      let x, z, y;
+      // With this do-while we avoid road space
+      do {
+        const index = Math.floor(Math.random() * vertices.count);
+        x = vertices.getX(index);
+        z = vertices.getZ(index);
+        y = vertices.getY(index);
+  
+      } while (x > this.roadStart && x < this.roadEnd || x < 0);
+  
+      const cactus = new Cactus().get();
+      cactus.position.set(x, y, z);
+      cactus.scale.set(0.5, 0.5, 0.5);
+  
+      groupCactus.add(cactus);
+    }
+
+    this.group.add(groupCactus);
   }
   //#endregion
 
