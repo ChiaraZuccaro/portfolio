@@ -1,15 +1,15 @@
 import { GeometryFactory } from "@app/GeometryFactory";
 import { ImprovedNoise } from 'three/addons/math/ImprovedNoise.js';
 import { Cactus } from "./cactus.class";
-import { PlaneGeometry } from "three";
+import { ColorRepresentation, PlaneGeometry } from "three";
 
 export class Ground extends GeometryFactory {
   private size = 256;
-  private terrainWidth = 100; // Larghezza del terreno
-  private terrainDepth = 100; // Profondità del terreno
-  private roadWidth = 4.1; // Larghezza della strada
-  private roadStart = -2.5; // Posizione iniziale della strada lungo l'asse X
-  private roadEnd = 2.5; // Posizione finale della strada lungo l'asse X
+  private terrainWidth = 100;
+  private terrainDepth = 100;
+  private roadWidth = 6.5;
+  private roadStart = -5;
+  private roadEnd = 5;
 
   constructor() {
     super();
@@ -29,6 +29,34 @@ export class Ground extends GeometryFactory {
   }
 
   //#region Road
+  private createStripes() {
+    const allStripes = new this.Three.Group();
+
+    const stripesMaterial = this.createRoadMaterial(0xffdd00);
+
+    const stripesLeftGeo = new this.Three.PlaneGeometry(0.2, 100, 1, 1);
+    const stripesCentralLeftGeo = new this.Three.PlaneGeometry(0.2, 100, 1, 1);
+    const stripesCentralRightGeo = new this.Three.PlaneGeometry(0.2, 100, 1, 1);
+    const stripesRightGeo = new this.Three.PlaneGeometry(0.2, 100, 1, 1);
+    
+    const stripeLeft = new this.Three.Mesh(stripesLeftGeo, stripesMaterial);
+    const stripeCentralLeft = new this.Three.Mesh(stripesCentralLeftGeo, stripesMaterial);
+    const stripeCentralRight = new this.Three.Mesh(stripesCentralRightGeo, stripesMaterial);
+    const stripeRight = new this.Three.Mesh(stripesRightGeo, stripesMaterial);
+
+    stripeLeft.rotateX(-Math.PI / 2);
+    stripeLeft.position.set(2.9, .1, 0);
+    stripeCentralLeft.rotateX(-Math.PI / 2);
+    stripeCentralLeft.position.set(.2, .1, 0);
+    stripeCentralRight.rotateX(-Math.PI / 2);
+    stripeCentralRight.position.set(-.2, .1, 0);
+    stripeRight.rotateX(-Math.PI / 2);
+    stripeRight.position.set(-2.9, .1, 0);
+
+    allStripes.add(stripeLeft, stripeCentralLeft, stripeCentralRight, stripeRight);
+    return allStripes;
+  }
+  
   private createRoadGeometry() {
     const roadGeometry = new this.Three.PlaneGeometry(this.roadWidth, this.terrainDepth, 1, 1);
     roadGeometry.rotateX(-Math.PI / 2);
@@ -36,24 +64,29 @@ export class Ground extends GeometryFactory {
     return roadGeometry;
   }
 
-  private createRoadMaterial() {
+  private createRoadMaterial(color: ColorRepresentation) {
     const roadTexture = new this.Three.TextureLoader().load('./textures/asphalt_black.jpg');
     roadTexture.wrapS = this.Three.RepeatWrapping;
     roadTexture.wrapT = this.Three.RepeatWrapping;
     roadTexture.repeat.set(1, 5);
   
     const roadMaterial = new this.Three.MeshStandardMaterial({
-      color: 0x333333,
-      map: roadTexture,
-      roughness: 0.5,
+      color, map: roadTexture, roughness: 1
     });
     return roadMaterial;
   }
 
   private createRoad() {
+    const roadGroup = new this.Three.Group();
+
     const roadGeo = this.createRoadGeometry();
-    const roadMaterial = this.createRoadMaterial();
-    return new this.Three.Mesh(roadGeo, roadMaterial);
+    const roadMaterial = this.createRoadMaterial(0x333333);
+
+    const stripes = this.createStripes();
+    const road = new this.Three.Mesh(roadGeo, roadMaterial);
+
+    roadGroup.add(road, stripes);
+    return roadGroup;
   }
   //#endregion
 
@@ -69,7 +102,7 @@ export class Ground extends GeometryFactory {
     for (let i = 0; i < data.length; i++) {
       const x = terrainGeometry.attributes['position'].getX(i);
       const z = terrainGeometry.attributes['position'].getZ(i);
-      // Controlla se il vertice è dentro l'area della strada
+
       if (x > this.roadStart && x < this.roadEnd) {
         data[i] = 0;
       } else {
@@ -95,7 +128,7 @@ export class Ground extends GeometryFactory {
     return new this.Three.MeshStandardMaterial({
       map: terrainTexture,
       color: 0xd2b48c,
-      roughness: .5,
+      roughness: 1,
     });
   }
 
@@ -111,9 +144,9 @@ export class Ground extends GeometryFactory {
 
   //#region Cactus
   private addCactus(geoTerrain: PlaneGeometry) {
-    const cactusCount = 15;
+    const cactusCount = 30;
     const vertices = geoTerrain.attributes['position'];
-    const groupCactus = new this.Three.Group(); // Gruppo per raccogliere tutti i cactus
+    const groupCactus = new this.Three.Group();
 
     for (let i = 0; i < cactusCount; i++) {
       let x, z, y;
