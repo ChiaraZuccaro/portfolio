@@ -54,12 +54,20 @@ export class Cactus extends GeometryFactory {
 
   private createBody() {
     const body = new this.Three.Group();
-    const sphereTop = this.createSphere({ radius: 0.6, widthSegments: 30, heightSegments: 30 }, this.material);
+    const sphereTop = this.createSphere({
+      radius: .6,
+      widthSegments: 50,
+      heightSegments: 25,
+      phiStart: 0,
+      phiLength: Math.PI * 2,
+      thetaStart: 0,
+      thetaLength: Math.PI / 2
+    }, this.material);
     const base = this.createCylinder({
       radiusTop: .6,
       radiusBottom: .3,
       height: 3,
-      radialSegments: 20,
+      radialSegments: 50,
       heightSegments: 10
     }, this.material);
 
