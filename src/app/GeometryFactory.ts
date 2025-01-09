@@ -1,5 +1,5 @@
-import { CylinderGeometry, Group, Material, Mesh, SphereGeometry } from "three";
-import { CylinderParams, SphereParams } from "./interfaces/three.interface";
+import { CylinderGeometry, Group, Material, Mesh, MeshStandardMaterial, RingGeometry, SphereGeometry, TorusGeometry } from "three";
+import { CylinderParams, RingParams, SphereParams, TorusParams } from "./interfaces/three.interface";
 import { ThreeService } from "./services/three.service";
 
 export class GeometryFactory {
@@ -8,6 +8,10 @@ export class GeometryFactory {
   public group = new Group();
 
   public material: Material;
+
+  public createMaterial() {
+    return new MeshStandardMaterial();
+  }
 
   public createSphere(sphere: SphereParams, material: Material) {
     const paramsSphere = Object.values(sphere);
@@ -19,5 +23,17 @@ export class GeometryFactory {
     const paramsCylinder = Object.values(cylinder);
     const cylinderObj = new CylinderGeometry(...paramsCylinder);
     return new Mesh(cylinderObj, material);
+  }
+
+  public createTorus(torus: TorusParams, material: Material) {
+    const paramsTorus = Object.values(torus);
+    const torusGeometry = new TorusGeometry(...paramsTorus);
+    return new Mesh(torusGeometry, material);
+  }
+
+  public createRing(ring: RingParams, material: Material) {
+    const paramsRing = Object.values(ring);
+    const ringGeometry = new RingGeometry(...paramsRing);
+    return new Mesh(ringGeometry, material);
   }
 }

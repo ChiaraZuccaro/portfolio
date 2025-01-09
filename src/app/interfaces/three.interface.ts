@@ -18,3 +18,20 @@ export interface CylinderParams {
   thetaStart?: any,
   thetaLength?: any
 }
+
+export interface TorusParams {
+  radius?: number,
+  tube?: number,
+  radialSegments?: number,
+  tubularSegments?: number,
+  arc?: number
+}
+
+export interface RingParams {
+  innerRadius?: number,
+  outerRadius?: number,
+  thetaSegments?: number,
+  phiSegments?: number,
+  thetaStart?: number,
+  thetaLength?: number
+}

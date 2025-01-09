@@ -1,13 +1,12 @@
 import { GeometryFactory } from "@app/GeometryFactory";
 import { ImprovedNoise } from 'three/addons/math/ImprovedNoise.js';
 import { Cactus } from "./cactus.class";
-import { AmbientLight, ColorRepresentation, DirectionalLight, Group, Mesh, MeshStandardMaterial, PlaneGeometry, RepeatWrapping, Texture, TextureLoader } from "three";
+import { AmbientLight, DirectionalLight, Group, Mesh, MeshStandardMaterial, PlaneGeometry, RepeatWrapping, Texture, TextureLoader } from "three";
 
 export class Ground extends GeometryFactory {
   private size = 256;
   private terrainWidth = 100;
   private terrainDepth = 100;
-  private roadWidth = 6.5;
   private roadStart = -5;
   private roadEnd = 5;
 
@@ -20,10 +19,9 @@ export class Ground extends GeometryFactory {
   constructor() {
     super();
 
-    const road = this.createRoad();
     const terrain = this.createTerrain();
   
-    this.group.add(terrain, road);
+    this.group.add(terrain);
   
     // Lights
     const ambientLight = new AmbientLight(0xffffff, 0.5);
@@ -34,68 +32,21 @@ export class Ground extends GeometryFactory {
     this.threeService.scene.add(directionalLight);
   }
 
-  //#region Road
-  private createStripes() {
-    const allStripes = new Group();
 
-    const stripesMaterial = this.createRoadMaterial(0xffdd00);
-
-    const stripesLeftGeo = new PlaneGeometry(0.2, this.terrainDepth, 1, 1);
-    const stripesCentralLeftGeo = new PlaneGeometry(0.2, this.terrainDepth, 1, 1);
-    const stripesCentralRightGeo = new PlaneGeometry(0.2, this.terrainDepth, 1, 1);
-    const stripesRightGeo = new PlaneGeometry(0.2, this.terrainDepth, 1, 1);
-    
-    const stripeLeft = new Mesh(stripesLeftGeo, stripesMaterial);
-    const stripeCentralLeft = new Mesh(stripesCentralLeftGeo, stripesMaterial);
-    const stripeCentralRight = new Mesh(stripesCentralRightGeo, stripesMaterial);
-    const stripeRight = new Mesh(stripesRightGeo, stripesMaterial);
-
-    stripeLeft.rotateX(-Math.PI / 2);
-    stripeLeft.position.set(2.9, .1, 0);
-    stripeCentralLeft.rotateX(-Math.PI / 2);
-    stripeCentralLeft.position.set(.2, .1, 0);
-    stripeCentralRight.rotateX(-Math.PI / 2);
-    stripeCentralRight.position.set(-.2, .1, 0);
-    stripeRight.rotateX(-Math.PI / 2);
-    stripeRight.position.set(-2.9, .1, 0);
-
-    allStripes.add(stripeLeft, stripeCentralLeft, stripeCentralRight, stripeRight);
-    return allStripes;
-  }
+  // private createCircularTerrain(): Mesh {
+  //   const terrainRadius = 60; // Raggio maggiore rispetto alla strada
+  //   const terrainWidth = 20; // Larghezza dell'anello del terreno
   
-  private createRoadGeometry() {
-    const roadGeometry = new PlaneGeometry(this.roadWidth, this.terrainDepth, 1, 1);
-    roadGeometry.rotateX(-Math.PI / 2);
-    roadGeometry.translate(0, 0, 0);
-    return roadGeometry;
-  }
-
-  private createRoadMaterial(color: ColorRepresentation) {
-    const roadTexture = new TextureLoader().load('./textures/asphalt_black.jpg');
-    roadTexture.wrapS = RepeatWrapping;
-    roadTexture.wrapT = RepeatWrapping;
-    roadTexture.repeat.set(1, 10);
-
-    this.animatedTextures.push(roadTexture);
+  //   const terrainGeometry = new TorusGeometry(terrainRadius, terrainWidth / 2, 16, 100);
+  //   const terrainMaterial = new MeshStandardMaterial({
+  //     color: 0xd2b48c, // Sabbia
+  //     roughness: 1,
+  //   });
   
-    return new MeshStandardMaterial({
-      map: roadTexture, color , roughness: 1
-    });
-  }
-
-  private createRoad() {
-    const roadGroup = new Group();
-
-    const roadGeo = this.createRoadGeometry();
-    const roadMaterial = this.createRoadMaterial(0x333333);
-
-    const stripes = this.createStripes();
-    const road = new Mesh(roadGeo, roadMaterial);
-
-    roadGroup.add(road, stripes);
-    return roadGroup;
-  }
-  //#endregion
+  //   const terrain = new Mesh(terrainGeometry, terrainMaterial);
+  //   terrain.rotation.x = Math.PI / 2; // Allinea l'anello al piano orizzontale
+  //   return terrain;
+  // }
 
   //#region Terrain
   private createTerrainGeometry() {

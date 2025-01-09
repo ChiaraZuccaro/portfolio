@@ -17,7 +17,7 @@ export class ThreeService {
 
   public initScenario(canvas?: HTMLCanvasElement) {
     this.scene = new Scene();
-    this.camera = new PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 10000);
+    this.camera = new PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 10000);
     this.renderer = new WebGLRenderer();
 
     this.scene.background = new Color(0xcce7ff);
@@ -26,8 +26,8 @@ export class ThreeService {
     // ----
     document.body.appendChild(this.renderer.domElement);
     // ----
-    this.camera.position.set(3, 1.5, 4.5);
-
+    this.camera.position.set(-2, 3, 55);
+    this.camera.lookAt(0, 0, 0);
 
     // DEV MODE
     const axesHelper = new AxesHelper(5);
