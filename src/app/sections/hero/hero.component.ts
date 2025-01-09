@@ -1,5 +1,6 @@
 import { Component, ElementRef, inject, OnInit, ViewChild } from '@angular/core';
 import { Ground } from '@app/classes/ground.class';
+import { Mountain } from '@app/classes/mountains.class';
 import { ThreeService } from '@app/services/three.service';
 
 @Component({
@@ -17,12 +18,15 @@ export class HeroComponent implements OnInit {
   ngOnInit() {
     this._threeService.initScenario();
 
-    const ground = new Ground().get();
+    const groundInstance = new Ground();
+    const ground = groundInstance.get();
     ground.rotateY(Math.PI / 2)
     this._threeService.addObj(ground);
 
-    this._threeService.animate(() => {
+    new Mountain();
 
+    this._threeService.animate(() => {
+      groundInstance.update();
       // Move the landscape backward
       // this._threeService.scene.children.forEach((child) => {
       //   if (child.position) {
