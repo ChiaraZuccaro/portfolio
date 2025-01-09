@@ -1,5 +1,6 @@
 import { GeometryFactory } from "@app/GeometryFactory";
 import { CylinderParams, SphereParams } from "@app/interfaces/three.interface";
+import { Group, MeshStandardMaterial } from "three";
 // import { OBJLoader } from 'three/examples/jsm/loaders/OBJLoader.js';
 // import { MTLLoader } from 'three/examples/jsm/loaders/MTLLoader.js';
 
@@ -12,8 +13,7 @@ export class Cactus extends GeometryFactory {
 
   constructor() {
     super();
-    this.color = 0x6ba583;
-    this.material = new this.Three.MeshStandardMaterial({ color: this.color, roughness: 0.8 });
+    this.material = new MeshStandardMaterial({ color: 0x6ba583, roughness: 0.8 });
 
     const body = this.createBody();
     const arms = this.createArms();
@@ -53,7 +53,7 @@ export class Cactus extends GeometryFactory {
   // }
 
   private createBody() {
-    const body = new this.Three.Group();
+    const body = new Group();
     const sphereTop = this.createSphere({
       radius: .6,
       widthSegments: 50,
@@ -80,7 +80,7 @@ export class Cactus extends GeometryFactory {
 
   //#region arms
   private createHigherArm() {
-    const higherArm = new this.Three.Group();
+    const higherArm = new Group();
 
     const cylinderBaseParams: CylinderParams = {
       radiusTop: 0.2,
@@ -114,7 +114,7 @@ export class Cactus extends GeometryFactory {
   }
 
   private createLowerArm() {
-    const lowerArm = new this.Three.Group();
+    const lowerArm = new Group();
 
     const cylinderBaseParams: CylinderParams = {
       radiusTop: 0.2,
@@ -148,7 +148,7 @@ export class Cactus extends GeometryFactory {
   }
 
   private createArms() {
-    const arms = new this.Three.Group();
+    const arms = new Group();
     const higherArm = this.createHigherArm();
     const lowerArm = this.createLowerArm();
 

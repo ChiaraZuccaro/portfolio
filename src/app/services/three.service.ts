@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import * as THREE from 'three';
+import { AmbientLight, AxesHelper, Camera, Color, DirectionalLight, PerspectiveCamera, Scene, WebGLRenderer } from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 @Injectable({
   providedIn: 'root'
@@ -7,39 +7,39 @@ import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 export class ThreeService {
   static instance: ThreeService;
 
-  public Three = THREE;
   public controls: OrbitControls;
 
-  public scene: THREE.Scene;
-  public camera: THREE.Camera;
-  public renderer: THREE.WebGLRenderer;
+  public scene: Scene;
+  public camera: Camera;
+  public renderer: WebGLRenderer;
 
   constructor() { ThreeService.instance = this }
 
   public initScenario(canvas?: HTMLCanvasElement) {
-    this.scene = new this.Three.Scene();
-    this.camera = new this.Three.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 10000);
-    this.renderer = new this.Three.WebGLRenderer();
+    this.scene = new Scene();
+    this.camera = new PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 10000);
+    this.renderer = new WebGLRenderer();
 
-    this.scene.background = new THREE.Color(0xcce7ff);
+    this.scene.background = new Color(0xcce7ff);
     this.renderer.setSize(window.innerWidth, window.innerHeight);
     this.renderer.setPixelRatio( window.devicePixelRatio );
     // ----
     document.body.appendChild(this.renderer.domElement);
     // ----
-    this.camera.position.z = 5;
+    this.camera.position.set(3, 1.5, 4.5);
+
 
     // DEV MODE
-    const axesHelper = new this.Three.AxesHelper(5);
+    const axesHelper = new AxesHelper(5);
 
     this.controls = new OrbitControls(this.camera, this.renderer.domElement);
     this.controls.target.set(0, 1.5, 0); // Punto attorno al quale orbitare
     this.controls.update();
     // DEV MODE
 
-    const ambientLight = new this.Three.AmbientLight(0xffffff, 0.5); // Luce ambientale
+    const ambientLight = new AmbientLight(0xffffff, 0.5); // Luce ambientale
 
-    const directionalLight = new this.Three.DirectionalLight(0xffffff, 1); // Luce direzionale
+    const directionalLight = new DirectionalLight(0xffffff, 1); // Luce direzionale
     directionalLight.position.set(5, 10, 7.5);
 
     this.scene.add(axesHelper, ambientLight, directionalLight);
