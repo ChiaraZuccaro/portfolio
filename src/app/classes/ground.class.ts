@@ -5,19 +5,17 @@ import { AmbientLight, DirectionalLight, Group, Mesh, MeshStandardMaterial, Plan
 
 export class Ground extends GeometryFactory {
   private size = 256;
-  private terrainWidth = 100;
-  private terrainDepth = 100;
+  private terrainWidth = 300;
+  private terrainDepth = 300;
   private roadStart = -5;
   private roadEnd = 5;
 
-  private groupCactus: Group;
   private terrainSegments: Mesh[];
   private terrainTexture: Texture;
-  private animatedTextures: Texture[] = [];
-  private lastSegmentEdge: number[] = [];
 
   constructor() {
     super();
+    this.material = this.createTerrainMaterial();
 
     const terrain = this.createTerrain();
   
@@ -30,98 +28,6 @@ export class Ground extends GeometryFactory {
     const directionalLight = new DirectionalLight(0xffffff, 1);
     directionalLight.position.set(10, 20, 10);
     this.threeService.scene.add(directionalLight);
-  }
-
-
-  // private createCircularTerrain(): Mesh {
-  //   const terrainRadius = 60; // Raggio maggiore rispetto alla strada
-  //   const terrainWidth = 20; // Larghezza dell'anello del terreno
-  
-  //   const terrainGeometry = new TorusGeometry(terrainRadius, terrainWidth / 2, 16, 100);
-  //   const terrainMaterial = new MeshStandardMaterial({
-  //     color: 0xd2b48c, // Sabbia
-  //     roughness: 1,
-  //   });
-  
-  //   const terrain = new Mesh(terrainGeometry, terrainMaterial);
-  //   terrain.rotation.x = Math.PI / 2; // Allinea l'anello al piano orizzontale
-  //   return terrain;
-  // }
-
-  //#region Terrain
-  private createTerrainGeometry() {
-    const terrainGeometry = new PlaneGeometry(this.terrainWidth, this.terrainDepth, this.size - 1, this.size - 1);
-    terrainGeometry.rotateX(-Math.PI / 2);
-
-    // Perlin Noise for Terrain Heights
-    const data = new Float32Array((this.size + 10) * (this.size + 10));
-    const perlin = new ImprovedNoise();
-    let quality = 10;
-
-    // Memorizza il bordo anteriore del segmento corrente
-    let currentSegmentEdge: number[] = [];
-
-    // Generazione dell'altezza del terreno
-    for (let i = 0; i < data.length; i++) {
-      const x = terrainGeometry.attributes['position'].getX(i);
-      const z = terrainGeometry.attributes['position'].getZ(i);
-
-      if (x > this.roadStart && x < this.roadEnd) {
-        // Mantieni la strada piatta
-        data[i] = 0;
-      } else if (z === -this.terrainDepth / 2 && this.lastSegmentEdge.length > 0) {
-        // Usa il bordo finale del segmento precedente per il bordo iniziale
-        data[i] = this.lastSegmentEdge.shift()!;
-      } else {
-        // Genera l'altezza con Perlin Noise
-        data[i] = perlin.noise(x / quality, 12 / quality, z / quality) * 2.5;
-
-        // Se siamo sul bordo finale, salviamo l'altezza
-        if (z === this.terrainDepth / 2) {
-          currentSegmentEdge.push(data[i]);
-        }
-      }
-    }
-
-    // Salva il bordo anteriore per il prossimo segmento
-    this.lastSegmentEdge = currentSegmentEdge;
-
-    // Applica le altezze al terreno
-    for (let i = 0; i < terrainGeometry.attributes['position'].count; i++) {
-      terrainGeometry.attributes['position'].setY(i, data[i]);
-    }
-
-    terrainGeometry.computeVertexNormals();
-
-    return terrainGeometry;
-
-
-
-    // const terrainGeometry = new PlaneGeometry(this.terrainWidth, this.terrainDepth, this.size - 1, this.size - 1);
-    // terrainGeometry.rotateX(-Math.PI / 2);
-  
-    // // Perlin Noise for Terrain Heights
-    // const data = new Float32Array(this.size * this.size);
-    // const perlin = new ImprovedNoise();
-    // let quality = 10;
-    // for (let i = 0; i < data.length; i++) {
-    //   const x = terrainGeometry.attributes['position'].getX(i);
-    //   const z = terrainGeometry.attributes['position'].getZ(i);
-
-    //   if (x > this.roadStart && x < this.roadEnd) {
-    //     data[i] = 0;
-    //   } else {
-    //     data[i] = perlin.noise(x / quality, 12/ quality, z / quality) * 2.5;
-    //   }
-    // }
-  
-    // for (let i = 0; i < terrainGeometry.attributes['position'].count; i++) {
-    //   terrainGeometry.attributes['position'].setY(i, data[i]);
-    // }
-  
-    // terrainGeometry.computeVertexNormals();
-
-    // return terrainGeometry;
   }
 
   private createTerrainMaterial() {
@@ -137,44 +43,43 @@ export class Ground extends GeometryFactory {
     });
   }
 
+  //#region Terrain
+  private createTerrainGeometry() {
+    const terrainGeometry = new PlaneGeometry(this.terrainWidth, this.terrainDepth, this.size - 1, this.size - 1);
+    terrainGeometry.rotateX(-Math.PI / 2);
+  
+    // Perlin Noise for Terrain Heights
+    const data = new Float32Array(this.size * this.size);
+    const perlin = new ImprovedNoise();
+    let quality = 10;
+    for (let i = 0; i < data.length; i++) {
+      const x = terrainGeometry.attributes['position'].getX(i);
+      const z = terrainGeometry.attributes['position'].getZ(i);
+
+      if (x > this.roadStart && x < this.roadEnd) {
+        data[i] = 0;
+      } else {
+        data[i] = perlin.noise(x / quality, 12/ quality, z / quality) * 2.5;
+      }
+    }
+  
+    for (let i = 0; i < terrainGeometry.attributes['position'].count; i++) {
+      terrainGeometry.attributes['position'].setY(i, data[i]);
+    }
+  
+    terrainGeometry.computeVertexNormals();
+
+    return terrainGeometry;
+  }
+
   private createTerrain() {
     const geoTerrain = this.createTerrainGeometry();
-    const materialTerrain = this.createTerrainMaterial();
+    const terrain = new Mesh(geoTerrain, this.material);
+    terrain.position.y = -.03;
 
-    // Segmento 1
-    const terrainSegment1 = new Mesh(geoTerrain, materialTerrain);
-    terrainSegment1.position.set(0, -0.03, 0);
-
-    // Aggiungi i cactus al primo segmento
-    const cactusGroup1 = this.addCactus(geoTerrain); // Genera i cactus per il segmento 1
-    terrainSegment1.add(cactusGroup1);
-
-    // Segmento 2 (posizionato dietro il primo)
-    const terrainSegment2 = new Mesh(geoTerrain, materialTerrain);
-    terrainSegment2.position.set(0, -0.03, -this.terrainDepth);
-
-    // Aggiungi i cactus al secondo segmento
-    const cactusGroup2 = this.addCactus(geoTerrain); // Genera i cactus per il segmento 2
-    terrainSegment2.add(cactusGroup2);
-
-    // Gruppo per contenere entrambi i segmenti
-    const terrainGroup = new Group();
-    terrainGroup.add(terrainSegment1, terrainSegment2);
-
-    // Salva i segmenti come proprietà per animarli
-    this.terrainSegments = [terrainSegment1, terrainSegment2];
-
-    return terrainGroup;
-
-
-    // const geoTerrain = this.createTerrainGeometry();
-    // const materialTerrain = this.createTerrainMaterial();
-    // const terrain = new Mesh(geoTerrain, materialTerrain);
-    // terrain.position.y = -.03;
-
-    // const cactusGroup = this.addCactus(geoTerrain);
-    // terrain.add(cactusGroup);
-    // return terrain;
+    const cactusGroup = this.addCactus(geoTerrain);
+    terrain.add(cactusGroup);
+    return terrain;
   }
   //#endregion
 
@@ -211,14 +116,6 @@ export class Ground extends GeometryFactory {
 
   public update() {
     // Road texture animation
-    this.animatedTextures.forEach(texture => {
-      texture.offset.y -= 0.01; // Applica l'animazione
-    });
-    // Texture terrain animation
-    // if (this.terrainTexture) {
-    //   this.terrainTexture.offset.y -= 0.002;
-    // }
-
     this.terrainSegments.forEach((segment) => {
       segment.position.z -= 0.2; // Sposta il segmento in avanti
 
@@ -227,15 +124,5 @@ export class Ground extends GeometryFactory {
         segment.position.z = this.terrainDepth * 1; // Spostalo dietro l'altro segmento
       }
     });
-    // if (this.terrain) {
-    //   this.terrain.position.z += 0.1; // Muovi il terreno in avanti
-    //   if (this.terrain.position.z > 50) {
-    //     this.terrain.position.z = 0; // Riporta il terreno indietro per un movimento infinito
-    //   }
-    // }
-    // Cactus animation
-    // if (this.groupCactus) {
-    //   this.updateCactus();
-    // }
   }
 }
