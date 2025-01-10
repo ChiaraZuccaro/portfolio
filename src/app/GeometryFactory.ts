@@ -9,6 +9,19 @@ export class GeometryFactory {
 
   public material: Material;
 
+  //#region BufferGeometry Instances
+  public torusGeoInstance(torus: TorusParams) {
+    const paramsTorus = Object.values(torus);
+    return new TorusGeometry(...paramsTorus)
+  }
+
+  public ringGeoInstance(ring: RingParams) {
+    const paramsRing = Object.values(ring);
+    return new RingGeometry(...paramsRing);
+  }
+  //#endregion
+
+  //#region Mesh Instances
   public createMaterial() {
     return new MeshStandardMaterial();
   }
@@ -26,14 +39,12 @@ export class GeometryFactory {
   }
 
   public createTorus(torus: TorusParams, material: Material) {
-    const paramsTorus = Object.values(torus);
-    const torusGeometry = new TorusGeometry(...paramsTorus);
+    const torusGeometry = this.torusGeoInstance(torus);
     return new Mesh(torusGeometry, material);
   }
 
   public createRing(ring: RingParams, material: Material) {
-    const paramsRing = Object.values(ring);
-    const ringGeometry = new RingGeometry(...paramsRing);
+    const ringGeometry = this.ringGeoInstance(ring);
     return new Mesh(ringGeometry, material);
   }
 
@@ -42,4 +53,5 @@ export class GeometryFactory {
     const circleGeometry = new CircleGeometry(...paramsCircle);
     return new Mesh(circleGeometry, material);
   }
+  //#endregion
 }

@@ -24,15 +24,16 @@ export class HeroComponent implements OnInit {
     this._threeService.addObj(road)
 
 
-    // const groundInstance = new Ground();
-    // const ground = groundInstance.get();
-    // ground.rotateY(Math.PI / 2)
-    // this._threeService.addObj(ground);
+    const groundInstance = new Ground();
+    const ground = groundInstance.get();
+    // ground.rotateX(-Math.PI)
+    ground.position.y = -.03
+    this._threeService.addObj(ground);
 
-    // new Mountain();
-
+    const mountains = new Mountain().get();
+    this._threeService.addObj(mountains)
     this._threeService.animate(() => {
-      roadInstance.update();
+      // roadInstance.update();
       // groundInstance.update();
     });
   }
