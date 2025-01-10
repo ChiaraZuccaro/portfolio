@@ -35,3 +35,10 @@ export interface RingParams {
   thetaStart?: number,
   thetaLength?: number
 }
+
+export interface CircleParams {
+  radius?: number,
+  segments?: number,
+  thetaStart?: number,
+  thetaLength?: number
+}

@@ -47,26 +47,32 @@ export class Ground extends GeometryFactory {
   private createTerrainGeometry() {
     const terrainGeometry = new PlaneGeometry(this.terrainWidth, this.terrainDepth, this.size - 1, this.size - 1);
     terrainGeometry.rotateX(-Math.PI / 2);
-  
-    // Perlin Noise for Terrain Heights
+
+    // Perlin Noise to generate random heights
     const data = new Float32Array(this.size * this.size);
     const perlin = new ImprovedNoise();
-    let quality = 10;
+    const quality = 10;
+
+    // Cyrcle that is going to be flat same as road dimensions minus 5
+    const innerRadius = 85;
+    const outerRadius = 105;
+
     for (let i = 0; i < data.length; i++) {
       const x = terrainGeometry.attributes['position'].getX(i);
       const z = terrainGeometry.attributes['position'].getZ(i);
 
-      if (x > this.roadStart && x < this.roadEnd) {
+      const distanceFromCenter = Math.sqrt(x ** 2 + z ** 2);
+
+      if (distanceFromCenter >= innerRadius && distanceFromCenter <= outerRadius) {
         data[i] = 0;
       } else {
-        data[i] = perlin.noise(x / quality, 12/ quality, z / quality) * 2.5;
+        data[i] = perlin.noise(x / quality, 12 / quality, z / quality) * 2.5;
       }
     }
-  
     for (let i = 0; i < terrainGeometry.attributes['position'].count; i++) {
       terrainGeometry.attributes['position'].setY(i, data[i]);
     }
-  
+    // Realistic illumination
     terrainGeometry.computeVertexNormals();
 
     return terrainGeometry;
@@ -85,24 +91,29 @@ export class Ground extends GeometryFactory {
 
   //#region Cactus
   private addCactus(geoTerrain: PlaneGeometry): Group {
-    const cactusCount = 30; // Numero di cactus per segmento
-    const vertices = geoTerrain.attributes['position'];
+    const cactusCount = 170;
+    const innerRoadRadius = 88;
+    const outerRoadRadius = 102;
+
     const groupCactus = new Group();
+    const vertices = geoTerrain.attributes['position'];
 
     for (let i = 0; i < cactusCount; i++) {
       let x, z, y;
-      // With this do-while we avoid road space
+
       do {
         const index = Math.floor(Math.random() * vertices.count);
         x = vertices.getX(index);
         z = vertices.getZ(index);
         y = vertices.getY(index);
-      } while (x > this.roadStart && x < this.roadEnd);
+      } while (
+        Math.sqrt(x ** 2 + z ** 2) >= innerRoadRadius && Math.sqrt(x ** 2 + z ** 2) <= outerRoadRadius
+      );
 
       const cactus = new Cactus().get();
       cactus.position.set(x, y, z);
-      cactus.scale.set(0.5, 0.5, 0.5);
-  
+      cactus.scale.set(0.7, 0.7, 0.7);
+
       groupCactus.add(cactus);
     }
 
@@ -117,11 +128,10 @@ export class Ground extends GeometryFactory {
   public update() {
     // Road texture animation
     this.terrainSegments.forEach((segment) => {
-      segment.position.z -= 0.2; // Sposta il segmento in avanti
+      segment.position.z -= 0.2;
 
-      // Quando un segmento esce dal campo visivo, ricollocalo dietro
       if (segment.position.z < -this.terrainDepth) {
-        segment.position.z = this.terrainDepth * 1; // Spostalo dietro l'altro segmento
+        segment.position.z = this.terrainDepth * 1;
       }
     });
   }

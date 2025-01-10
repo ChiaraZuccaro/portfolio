@@ -1,5 +1,5 @@
-import { CylinderGeometry, Group, Material, Mesh, MeshStandardMaterial, RingGeometry, SphereGeometry, TorusGeometry } from "three";
-import { CylinderParams, RingParams, SphereParams, TorusParams } from "./interfaces/three.interface";
+import { CircleGeometry, CylinderGeometry, Group, Material, Mesh, MeshStandardMaterial, RingGeometry, SphereGeometry, TorusGeometry } from "three";
+import { CircleParams, CylinderParams, RingParams, SphereParams, TorusParams } from "./interfaces/three.interface";
 import { ThreeService } from "./services/three.service";
 
 export class GeometryFactory {
@@ -35,5 +35,11 @@ export class GeometryFactory {
     const paramsRing = Object.values(ring);
     const ringGeometry = new RingGeometry(...paramsRing);
     return new Mesh(ringGeometry, material);
+  }
+
+  public createCircle(circle: CircleParams, material: Material) {
+    const paramsCircle = Object.values(circle);
+    const circleGeometry = new CircleGeometry(...paramsCircle);
+    return new Mesh(circleGeometry, material);
   }
 }

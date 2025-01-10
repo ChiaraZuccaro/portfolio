@@ -1,12 +1,12 @@
 import { GeometryFactory } from "@app/GeometryFactory";
 import { RingParams } from "@app/interfaces/three.interface";
-import { ColorRepresentation, Group, Mesh, MeshStandardMaterial, PlaneGeometry, RepeatWrapping, Texture, TextureLoader } from "three";
+import { ColorRepresentation, Group, MeshStandardMaterial, RepeatWrapping, Texture, TextureLoader } from "three";
 
 export class Road extends GeometryFactory {
   private animatedTextures: Texture[] = [];
 
-  private innerRadius = 50;
-  private outerRadius = 60;
+  private innerRadius = 90;
+  private outerRadius = 100;
   private segments = 1000;
 
   private ringRoadParams: RingParams = {
@@ -34,6 +34,7 @@ export class Road extends GeometryFactory {
     });
   }
 
+  //#region stripes
   private createSingleStripe(ring: RingParams) {
     const stripeMaterial = this.createRoadMaterial(0xffdd00);
     const stripe = this.createRing(ring, stripeMaterial);
@@ -70,7 +71,7 @@ export class Road extends GeometryFactory {
 
     return stripesGroup;
   }
-  
+  //#endregion
 
   private createCircularRoad() {
     const roadMaterial = this.createRoadMaterial(0x333333);
