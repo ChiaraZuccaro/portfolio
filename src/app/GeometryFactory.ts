@@ -1,12 +1,8 @@
 import { CircleGeometry, CylinderGeometry, Group, Material, Mesh, MeshStandardMaterial, RingGeometry, SphereGeometry, TorusGeometry } from "three";
 import { CircleParams, CylinderParams, RingParams, SphereParams, TorusParams } from "./interfaces/three.interface";
-import { ThreeService } from "./services/three.service";
 
 export class GeometryFactory {
-  public threeService = ThreeService.instance;
-  
   public group = new Group();
-
   public material: Material;
 
   //#region BufferGeometry Instances

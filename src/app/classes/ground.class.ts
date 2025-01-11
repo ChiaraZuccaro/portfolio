@@ -1,14 +1,12 @@
 import { GeometryFactory } from "@app/GeometryFactory";
 import { ImprovedNoise } from 'three/addons/math/ImprovedNoise.js';
 import { Cactus } from "./cactus.class";
-import { AmbientLight, DirectionalLight, Group, Mesh, MeshStandardMaterial, PlaneGeometry, RepeatWrapping, Texture, TextureLoader } from "three";
+import { Group, Mesh, MeshStandardMaterial, PlaneGeometry, RepeatWrapping, Texture, TextureLoader } from "three";
 
 export class Ground extends GeometryFactory {
   private size = 256;
   private terrainWidth = 300;
   private terrainDepth = 300;
-  private roadStart = -5;
-  private roadEnd = 5;
 
   private terrainSegments: Mesh[];
   private terrainTexture: Texture;
@@ -16,18 +14,9 @@ export class Ground extends GeometryFactory {
   constructor() {
     super();
     this.material = this.createTerrainMaterial();
-
     const terrain = this.createTerrain();
   
     this.group.add(terrain);
-  
-    // Lights
-    const ambientLight = new AmbientLight(0xffffff, 0.5);
-    this.threeService.scene.add(ambientLight);
-  
-    const directionalLight = new DirectionalLight(0xffffff, 1);
-    directionalLight.position.set(10, 20, 10);
-    this.threeService.scene.add(directionalLight);
   }
 
   private createTerrainMaterial() {
