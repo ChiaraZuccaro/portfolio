@@ -112,6 +112,7 @@ export class Ground extends GeometryFactory {
 
       const cactus = new Cactus().get();
       cactus.position.set(x, y, z);
+      cactus.rotateY(Math.random() * i);
       cactus.scale.set(0.7, 0.7, 0.7);
 
       groupCactus.add(cactus);
