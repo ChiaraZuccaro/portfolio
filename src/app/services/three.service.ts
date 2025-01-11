@@ -8,7 +8,13 @@ export class ThreeService {
   public settingsGroundScenario = {}
 
   public controls: OrbitControls;
-
+ 
+  private ringInnerRadius = 93; // Inner radius of the ring
+  private ringOuterRadius = 103; // Outer radius of the ring
+  private ringCenterRadius = (this.ringInnerRadius + this.ringOuterRadius) / 2; // Center radius of the ring
+  private roadYLevel = 0.7; // Height of the road above the map
+  private cameraDistanceFromRing = 6; // Distance of the camera from the road
+  private cameraHeight = 2.05; // Height of the camera above the road
   
   private fogColor: number = 0xcce0ff;
   private fogNear: number = 50;
@@ -32,7 +38,7 @@ export class ThreeService {
     document.body.appendChild(this.renderer.domElement);
     // ----
 
-    this.setPositionCamera();
+    // this.setPositionCamera();
 
     // DEV MODE
     const axesHelper = new AxesHelper(5);
@@ -43,31 +49,35 @@ export class ThreeService {
 
     this.scene.add(axesHelper, this.camera);
     // DEV MODE
-
     this.setLights();
+    this.animate(this.cameraUpdate());
   }
 
-  private setPositionCamera() {
-    // Configurazioni del ring (strada)
-    const ringInnerRadius = 90; // Raggio interno del ring
-    const ringOuterRadius = 100; // Raggio esterno del ring
-    const ringCenterRadius = (ringInnerRadius + ringOuterRadius)  / 2; // Centro del ring
-    const roadYLevel = 0.01; // Altezza della strada rispetto alla mappa
+  private cameraUpdate() {
+    let angle = 0; // Initial angle of the camera position
+    const rotationSpeed = 0.003; // Speed of rotation
+    const lookAheadOffset = 0.02; // Offset to look slightly ahead
 
-    // Configurazione della camera
-    const cameraDistanceFromRing = 10; // Distanza della camera dall'esterno del ring
-    const cameraHeight = 3; // Altezza della camera sopra la strada
+    return () => {
+      // Update the camera's angle dynamically for movement
+      angle -= rotationSpeed;
 
-    const cameraAngle = Math.PI / 4; // Angolo della posizione della camera (45°)
+      // Calculate the camera's position using polar coordinates
+      const cameraX = (this.ringCenterRadius + this.cameraDistanceFromRing) * Math.cos(angle);
+      const cameraY = this.roadYLevel + this.cameraHeight; // Keep the height constant
+      const cameraZ = (this.ringCenterRadius + this.cameraDistanceFromRing) * Math.sin(angle);
 
-    // Calcolo posizione della camera accanto al ring
-    const cameraX = (ringCenterRadius + cameraDistanceFromRing) * Math.cos(cameraAngle);
-    const cameraZ = (ringCenterRadius + cameraDistanceFromRing) * Math.sin(cameraAngle);
-    const cameraY = roadYLevel + cameraHeight; // Altezza sopra il livello della strada
+      // Set the camera's position
+      this.camera.position.set(cameraX, cameraY, cameraZ);
 
-    // Creazione e posizionamento della camera
-    this.camera.position.set(cameraX, cameraY, cameraZ);
-    this.camera.rotation.set(0, Math.PI / 3,0);
+      // Calculate the target point slightly ahead of the camera's current position
+      const lookAtTargetX = this.ringCenterRadius * Math.cos(angle + lookAheadOffset); // Slightly ahead on the ring
+      const lookAtTargetZ = this.ringCenterRadius * Math.sin(angle + lookAheadOffset); // Slightly ahead on the ring
+      const lookAtTarget = new Vector3(lookAtTargetX, this.roadYLevel, lookAtTargetZ);
+
+      // Make the camera look at the dynamically calculated point
+      this.camera.lookAt(lookAtTarget);
+    };
   }
 
   private setLights() {
@@ -77,10 +87,6 @@ export class ThreeService {
     directionalLight.position.set(1, 1, 1);
 
     this.scene.add(ambientLight, directionalLight);
-  }
-
-  private addFog() {
-
   }
 
   public addObj(obj: any) {
