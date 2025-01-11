@@ -68,8 +68,8 @@ export class Mountains extends GeometryFactory {
       const geometry = this.torusGeoInstance({
         radius: torusRadius,
         tube: torusThickness,
-        radialSegments: 300,
-        tubularSegments: 7500
+        radialSegments: 1000,
+        tubularSegments: 1000
       });
 
       const positionAttribute = geometry.attributes['position'];
