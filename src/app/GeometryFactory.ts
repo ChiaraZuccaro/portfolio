@@ -22,10 +22,6 @@ export class GeometryFactory {
   //#endregion
 
   //#region Mesh Instances
-  public createMaterial() {
-    return new MeshStandardMaterial();
-  }
-
   public createSphere(sphere: SphereParams, material: Material) {
     const paramsSphere = Object.values(sphere);
     const sphereGeo = new SphereGeometry(...paramsSphere);

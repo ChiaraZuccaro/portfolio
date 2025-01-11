@@ -1,6 +1,6 @@
 import { Component, ElementRef, inject, OnInit, ViewChild } from '@angular/core';
 import { Ground } from '@app/classes/ground.class';
-import { Mountain } from '@app/classes/mountains.class';
+import { Mountains } from '@app/classes/mountains.class';
 import { Road } from '@app/classes/road.class';
 import { ThreeService } from '@app/services/three.service';
 
@@ -30,7 +30,7 @@ export class HeroComponent implements OnInit {
     ground.position.y = -.03
     this._threeService.addObj(ground);
 
-    const mountains = new Mountain().get();
+    const mountains = new Mountains().get();
     this._threeService.addObj(mountains)
     this._threeService.animate(() => {
       // roadInstance.update();
