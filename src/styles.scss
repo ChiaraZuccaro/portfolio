@@ -11,6 +11,16 @@
   --highlight-color: #{Palette.$highlight-color};
 }
 
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  overflow: hidden;
+}
 
 /* Main body text */
 body {
@@ -21,7 +31,6 @@ body {
   margin: 0;
   padding: 0;
   user-select: none;
-  height: 100vh;
 
   header {
     position: sticky;
@@ -56,25 +65,5 @@ button, .cta {
 
   &--secondary {
     @include mix.button(Palette.$secondary-color, Palette.$text-dark, Palette.$highlight-color);
-  }
-}
-
-.tooltip-container {
-  position: relative;
-
-  .tooltip-item {
-    display: none;
-  }
-
-  &:hover {
-    .tooltip-item {
-      display: block;
-      position: absolute;
-      top: -50%;
-      left: 0;
-      white-space: nowrap;
-      padding: .3rem .5rem;
-      border-radius: .3rem;
-    }
   }
 }

@@ -9,7 +9,7 @@ export class CameraCustom {
   private cameraHeight = 2; // Height of the camera above the road
 
   private angle = 0;
-  private rotationSpeed = 0.003;
+  private rotationSpeed = 0.002;
   private lookAheadOffset = 0.13;
   
   public update(camera: Camera) {

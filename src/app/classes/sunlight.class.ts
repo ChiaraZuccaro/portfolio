@@ -4,9 +4,10 @@ export class Sunlight {
   private roadYLevel = 0.7;
   // 0xd8a200
   // 0xffce52
+  // 0xffa500
   private sunSettings = {
-    color: 0xffa500,
-    intensity: 10,
+    color: 0xffffff,
+    intensity: 3,
     position: { x: 0, y: this.roadYLevel, z: 0 }
   }
 
