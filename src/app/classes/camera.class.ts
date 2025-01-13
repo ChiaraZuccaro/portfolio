@@ -5,12 +5,12 @@ export class CameraCustom {
   private ringOuterRadius = 103; // Outer radius of the ring
   private ringCenterRadius = (this.ringInnerRadius + this.ringOuterRadius) / 2; // Center radius of the ring
   private roadYLevel = 0.7; // Height of the road above the map
-  private cameraDistanceFromRing = 6; // Distance of the camera from the road
-  private cameraHeight = 2.05; // Height of the camera above the road
+  private cameraDistanceFromRing = -11; // Distance of the camera from the road
+  private cameraHeight = 2; // Height of the camera above the road
 
   private angle = 0;
   private rotationSpeed = 0.003;
-  private lookAheadOffset = 0.02;
+  private lookAheadOffset = 0.13;
   
   public update(camera: Camera) {
     // Update the camera's angle dynamically for movement
