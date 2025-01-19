@@ -16,7 +16,7 @@ export class Mountains extends GeometryFactory {
   }
 
   private createMaterial() {
-    const mountainTexture = new TextureLoader().load('./textures/mountains.jpg');
+    const mountainTexture = this.textureLoader.load('./textures/mountains.jpg');
     mountainTexture.wrapS = RepeatWrapping;
     mountainTexture.wrapT = RepeatWrapping;
     mountainTexture.repeat.set(1,1);

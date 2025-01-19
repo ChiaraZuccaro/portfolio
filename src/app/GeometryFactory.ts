@@ -1,7 +1,9 @@
 import { CircleGeometry, CylinderGeometry, Group, Material, Mesh, MeshStandardMaterial, RingGeometry, SphereGeometry, TorusGeometry } from "three";
 import { CircleParams, CylinderParams, RingParams, SphereParams, TorusParams } from "./interfaces/three.interface";
+import { ResourceService } from "./services/resource.service";
 
 export class GeometryFactory {
+  public textureLoader = ResourceService.instance.texture;
   public group = new Group();
   public material: Material;
 

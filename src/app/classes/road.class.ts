@@ -1,9 +1,8 @@
 import { GeometryFactory } from "@app/GeometryFactory";
 import { RingParams } from "@app/interfaces/three.interface";
-import { ColorRepresentation, Group, MeshStandardMaterial, RepeatWrapping, Texture, TextureLoader } from "three";
+import { ColorRepresentation, Group, MeshStandardMaterial, RepeatWrapping, Texture, TextureLoader, Vector2 } from "three";
 
 export class Road extends GeometryFactory {
-  private animatedTextures: Texture[] = [];
 
   private innerRadius = 90;
   private outerRadius = 100;
@@ -15,22 +14,31 @@ export class Road extends GeometryFactory {
     thetaSegments: this.segments
   }
 
+  private roadTexture: Texture;
+
   constructor() {
     super();
-    this.createRoute()
+    this.createRoadTexture();
+    this.createRoute();
+  }
+
+  private createRoadTexture() {
+    this.roadTexture = this.textureLoader.load('./textures/asphalt_black.jpg');
+    this.roadTexture.wrapS = RepeatWrapping;
+    this.roadTexture.wrapT = RepeatWrapping;
+    this.roadTexture.repeat.set(1, 2);
+    this.roadTexture.center.set(.5,.5);
   }
 
   private createRoadMaterial(color: ColorRepresentation) {
-    const roadTexture = new TextureLoader().load('./textures/asphalt_black.jpg');
-    roadTexture.wrapS = RepeatWrapping;
-    roadTexture.wrapT = RepeatWrapping;
-    roadTexture.repeat.set(1, 2);
-    roadTexture.center.set(.5,.5);
-
-    this.animatedTextures.push(roadTexture);
-  
     return new MeshStandardMaterial({
-      map: roadTexture, color , roughness: 1
+      map: this.roadTexture,
+      // normalMap: this.roadTexture,
+      // normalScale: new Vector2(0.85, -0.85),
+      displacementMap: this.roadTexture,
+      displacementScale: 0.2,
+      color,
+      roughness: 1
     });
   }
 
@@ -88,11 +96,5 @@ export class Road extends GeometryFactory {
 
   public get() {
     return this.group;
-  }
-
-  public update() {
-    this.animatedTextures.forEach(texture => {
-      texture.rotation += 0.003
-    });
   }
 }

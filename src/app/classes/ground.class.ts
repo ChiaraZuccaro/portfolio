@@ -20,7 +20,7 @@ export class Ground extends GeometryFactory {
   }
 
   private createTerrainMaterial() {
-    this.terrainTexture = new TextureLoader().load('./textures/sand.jpg');
+    this.terrainTexture = this.textureLoader.load('./textures/sand.jpg');
     this.terrainTexture.wrapS = RepeatWrapping;
     this.terrainTexture.wrapT = RepeatWrapping;
     this.terrainTexture.repeat.set(1,1);
